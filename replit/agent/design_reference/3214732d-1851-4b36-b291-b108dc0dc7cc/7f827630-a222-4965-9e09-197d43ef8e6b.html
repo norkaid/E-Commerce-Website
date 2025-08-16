@@ -1,0 +1,1215 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopHub - Modern E-commerce Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'brand': {
+                            50: '#eff6ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="font-inter bg-slate-50 text-slate-800">
+
+<!-- @COMPONENT: NavigationHeader [sticky header with search, cart, auth] -->
+<header class="bg-white shadow-sm border-b border-slate-200 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+            <!-- Logo -->
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <h1 class="text-2xl font-bold text-brand-600">ShopHub</h1>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:ml-10 md:flex md:space-x-8">
+                    <a href="#" class="text-slate-600 hover:text-brand-600 px-3 py-2 text-sm font-medium transition-colors">Home</a>
+                    <a href="#" class="text-slate-600 hover:text-brand-600 px-3 py-2 text-sm font-medium transition-colors">Products</a>
+                    <a href="#" class="text-slate-600 hover:text-brand-600 px-3 py-2 text-sm font-medium transition-colors">Categories</a>
+                    <a href="#" class="text-slate-600 hover:text-brand-600 px-3 py-2 text-sm font-medium transition-colors">About</a>
+                </nav>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="flex-1 max-w-2xl mx-8 hidden lg:block">
+                <div class="relative">
+                    <input type="text" placeholder="Search products..." 
+                           class="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all"
+                           data-mock="true">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-search text-slate-400"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cart and Auth -->
+            <div class="flex items-center space-x-4">
+                <!-- Cart -->
+                <button class="relative p-2 text-slate-600 hover:text-brand-600 transition-colors" data-event="click:toggleCart">
+                    <i class="fas fa-shopping-cart text-xl"></i>
+                    <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center" data-bind="cart.itemCount">3</span>
+                </button>
+
+                <!-- User Menu -->
+                <div class="relative">
+                    <button class="flex items-center space-x-2 text-slate-600 hover:text-brand-600 transition-colors" data-event="click:toggleUserMenu">
+                        <i class="fas fa-user-circle text-xl"></i>
+                        <span class="hidden md:block text-sm font-medium" data-bind="user.name">Account</span>
+                    </button>
+                </div>
+
+                <!-- Mobile menu button -->
+                <button class="md:hidden p-2 text-slate-600" data-event="click:toggleMobileMenu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- @END_COMPONENT: NavigationHeader -->
+
+<!-- @COMPONENT: HeroSection [featured products carousel] -->
+<section class="relative bg-gradient-to-r from-brand-600 to-brand-700 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <h1 class="text-4xl lg:text-6xl font-bold mb-6">
+                    Discover Amazing Products
+                </h1>
+                <p class="text-xl mb-8 text-blue-100">
+                    Shop the latest trends in electronics, fashion, and home decor with fast shipping and great prices.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button class="bg-white text-brand-600 px-8 py-3 rounded-lg font-semibold hover:bg-slate-100 transition-colors">
+                        Shop Now
+                    </button>
+                    <button class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-brand-600 transition-colors">
+                        Learn More
+                    </button>
+                </div>
+            </div>
+            <div class="hidden lg:block">
+                <!-- Hero promotional banner showcasing various products -->
+                <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600" 
+                     alt="Modern shopping experience with various products" 
+                     class="rounded-xl shadow-2xl w-full h-auto" data-mock-image="true">
+            </div>
+        </div>
+    </div>
+</section>
+<!-- @END_COMPONENT: HeroSection -->
+
+<!-- @COMPONENT: CategoryFilter [horizontal category navigation] -->
+<section class="bg-white border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div class="flex flex-wrap gap-4 justify-center lg:justify-start">
+            <button class="px-6 py-2 bg-brand-600 text-white rounded-full text-sm font-medium" data-filter="all">All Products</button>
+            <button class="px-6 py-2 bg-slate-100 text-slate-600 hover:bg-slate-200 rounded-full text-sm font-medium transition-colors" data-filter="electronics">Electronics</button>
+            <button class="px-6 py-2 bg-slate-100 text-slate-600 hover:bg-slate-200 rounded-full text-sm font-medium transition-colors" data-filter="fashion">Fashion</button>
+            <button class="px-6 py-2 bg-slate-100 text-slate-600 hover:bg-slate-200 rounded-full text-sm font-medium transition-colors" data-filter="home">Home & Decor</button>
+            <button class="px-6 py-2 bg-slate-100 text-slate-600 hover:bg-slate-200 rounded-full text-sm font-medium transition-colors" data-filter="accessories">Accessories</button>
+        </div>
+    </div>
+</section>
+<!-- @END_COMPONENT: CategoryFilter -->
+
+<!-- @COMPONENT: ProductGrid [main product listing with filters] -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="flex flex-col lg:flex-row gap-8">
+        <!-- Sidebar Filters -->
+        <div class="lg:w-64 flex-shrink-0">
+            <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
+                <h3 class="text-lg font-semibold mb-4">Filters</h3>
+                
+                <!-- Price Range -->
+                <div class="mb-6">
+                    <h4 class="font-medium mb-3">Price Range</h4>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="rounded text-brand-600 focus:ring-brand-500" data-mock="true">
+                            <span class="ml-2 text-sm">Under $25</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" class="rounded text-brand-600 focus:ring-brand-500" data-mock="true">
+                            <span class="ml-2 text-sm">$25 - $50</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" class="rounded text-brand-600 focus:ring-brand-500" data-mock="true">
+                            <span class="ml-2 text-sm">$50 - $100</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" class="rounded text-brand-600 focus:ring-brand-500" data-mock="true">
+                            <span class="ml-2 text-sm">Over $100</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Rating -->
+                <div class="mb-6">
+                    <h4 class="font-medium mb-3">Rating</h4>
+                    <div class="space-y-2">
+                        <!-- @MAP: ratingOptions.map(option => ( -->
+                        <label class="flex items-center">
+                            <input type="checkbox" class="rounded text-brand-600 focus:ring-brand-500" data-mock="true">
+                            <span class="ml-2 text-sm flex items-center">
+                                <div class="flex text-yellow-400 mr-1">
+                                    <i class="fas fa-star text-xs"></i>
+                                    <i class="fas fa-star text-xs"></i>
+                                    <i class="fas fa-star text-xs"></i>
+                                    <i class="fas fa-star text-xs"></i>
+                                    <i class="fas fa-star text-xs"></i>
+                                </div>
+                                & up
+                            </span>
+                        </label>
+                        <!-- @END_MAP )) -->
+                    </div>
+                </div>
+
+                <!-- Brand -->
+                <div>
+                    <h4 class="font-medium mb-3">Brand</h4>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="rounded text-brand-600 focus:ring-brand-500" data-mock="true">
+                            <span class="ml-2 text-sm">Apple</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" class="rounded text-brand-600 focus:ring-brand-500" data-mock="true">
+                            <span class="ml-2 text-sm">Samsung</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" class="rounded text-brand-600 focus:ring-brand-500" data-mock="true">
+                            <span class="ml-2 text-sm">Nike</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Grid -->
+        <div class="flex-1">
+            <!-- Sort and View Options -->
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+                <p class="text-slate-600"><span data-bind="products.count">248</span> products found</p>
+                <div class="flex items-center gap-4">
+                    <select class="border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-brand-500 focus:border-transparent" data-mock="true">
+                        <option>Sort by: Featured</option>
+                        <option>Price: Low to High</option>
+                        <option>Price: High to Low</option>
+                        <option>Customer Rating</option>
+                        <option>Newest</option>
+                    </select>
+                    <div class="flex border border-slate-300 rounded-lg">
+                        <button class="p-2 bg-brand-600 text-white rounded-l-lg" data-view="grid">
+                            <i class="fas fa-th text-sm"></i>
+                        </button>
+                        <button class="p-2 text-slate-600 hover:bg-slate-100 rounded-r-lg" data-view="list">
+                            <i class="fas fa-list text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- @MAP: products.map(product => ( -->
+                
+                <!-- Electronics Products -->
+                <!-- Modern smartphone with sleek design and multiple color options -->
+                <div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden hover:shadow-lg transition-shadow group" data-category="electronics">
+                    <div class="aspect-square overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400" 
+                             alt="Latest smartphone model" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-mock-image="true">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-slate-800 mb-2" data-bind="product.name">Premium Smartphone Pro</h3>
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400 text-sm mr-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-sm text-slate-600" data-bind="product.reviewCount">(124)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-lg font-bold text-slate-900" data-bind="product.price">$899.99</span>
+                            <button class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition-colors" data-event="click:addToCart">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wireless headphones with noise cancellation technology -->
+                <div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden hover:shadow-lg transition-shadow group" data-category="electronics">
+                    <div class="aspect-square overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400" 
+                             alt="Wireless noise-cancelling headphones" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-mock-image="true">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-slate-800 mb-2" data-bind="product.name">Wireless Headphones Pro</h3>
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400 text-sm mr-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="text-sm text-slate-600" data-bind="product.reviewCount">(89)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-lg font-bold text-slate-900" data-bind="product.price">$249.99</span>
+                            <button class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition-colors" data-event="click:addToCart">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- High-performance laptop computer for professionals -->
+                <div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden hover:shadow-lg transition-shadow group" data-category="electronics">
+                    <div class="aspect-square overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400" 
+                             alt="Modern laptop computer" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-mock-image="true">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-slate-800 mb-2" data-bind="product.name">Ultra-Slim Laptop</h3>
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400 text-sm mr-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-sm text-slate-600" data-bind="product.reviewCount">(203)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-lg font-bold text-slate-900" data-bind="product.price">$1,299.99</span>
+                            <button class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition-colors" data-event="click:addToCart">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced smartwatch with fitness tracking capabilities -->
+                <div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden hover:shadow-lg transition-shadow group" data-category="electronics">
+                    <div class="aspect-square overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400" 
+                             alt="Smartwatch with fitness tracking" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-mock-image="true">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-slate-800 mb-2" data-bind="product.name">Fitness Smartwatch</h3>
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400 text-sm mr-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="text-sm text-slate-600" data-bind="product.reviewCount">(156)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-lg font-bold text-slate-900" data-bind="product.price">$399.99</span>
+                            <button class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition-colors" data-event="click:addToCart">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fashion Products -->
+                <!-- Trendy casual t-shirt with modern graphic design -->
+                <div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden hover:shadow-lg transition-shadow group" data-category="fashion">
+                    <div class="aspect-square overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400" 
+                             alt="Casual graphic t-shirt" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-mock-image="true">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-slate-800 mb-2" data-bind="product.name">Graphic Design T-Shirt</h3>
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400 text-sm mr-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-sm text-slate-600" data-bind="product.reviewCount">(78)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-lg font-bold text-slate-900" data-bind="product.price">$29.99</span>
+                            <button class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition-colors" data-event="click:addToCart">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Classic denim jeans with modern fit and styling -->
+                <div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden hover:shadow-lg transition-shadow group" data-category="fashion">
+                    <div class="aspect-square overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1542272604-787c3835535d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400" 
+                             alt="Classic denim jeans" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-mock-image="true">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-slate-800 mb-2" data-bind="product.name">Classic Denim Jeans</h3>
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400 text-sm mr-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="text-sm text-slate-600" data-bind="product.reviewCount">(145)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-lg font-bold text-slate-900" data-bind="product.price">$79.99</span>
+                            <button class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition-colors" data-event="click:addToCart">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stylish designer sneakers for everyday wear -->
+                <div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden hover:shadow-lg transition-shadow group" data-category="fashion">
+                    <div class="aspect-square overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400" 
+                             alt="Designer sneakers" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-mock-image="true">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-slate-800 mb-2" data-bind="product.name">Designer Sneakers</h3>
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400 text-sm mr-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-sm text-slate-600" data-bind="product.reviewCount">(92)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-lg font-bold text-slate-900" data-bind="product.price">$129.99</span>
+                            <button class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition-colors" data-event="click:addToCart">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Elegant summer dress with floral pattern -->
+                <div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden hover:shadow-lg transition-shadow group" data-category="fashion">
+                    <div class="aspect-square overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400" 
+                             alt="Floral summer dress" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-mock-image="true">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-slate-800 mb-2" data-bind="product.name">Floral Summer Dress</h3>
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400 text-sm mr-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="text-sm text-slate-600" data-bind="product.reviewCount">(67)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-lg font-bold text-slate-900" data-bind="product.price">$89.99</span>
+                            <button class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition-colors" data-event="click:addToCart">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Home Decor Products -->
+                <!-- Modern minimalist table lamp with adjustable brightness -->
+                <div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden hover:shadow-lg transition-shadow group" data-category="home">
+                    <div class="aspect-square overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400" 
+                             alt="Modern table lamp" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-mock-image="true">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-slate-800 mb-2" data-bind="product.name">Modern Table Lamp</h3>
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400 text-sm mr-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-sm text-slate-600" data-bind="product.reviewCount">(43)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-lg font-bold text-slate-900" data-bind="product.price">$149.99</span>
+                            <button class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition-colors" data-event="click:addToCart">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Decorative wall art with abstract geometric design -->
+                <div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden hover:shadow-lg transition-shadow group" data-category="home">
+                    <div class="aspect-square overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400" 
+                             alt="Abstract wall art" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-mock-image="true">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-slate-800 mb-2" data-bind="product.name">Abstract Wall Art</h3>
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400 text-sm mr-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="text-sm text-slate-600" data-bind="product.reviewCount">(29)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-lg font-bold text-slate-900" data-bind="product.price">$199.99</span>
+                            <button class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition-colors" data-event="click:addToCart">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comfortable throw pillow with textured fabric -->
+                <div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden hover:shadow-lg transition-shadow group" data-category="home">
+                    <div class="aspect-square overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400" 
+                             alt="Decorative throw pillow" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-mock-image="true">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-slate-800 mb-2" data-bind="product.name">Textured Throw Pillow</h3>
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400 text-sm mr-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-sm text-slate-600" data-bind="product.reviewCount">(87)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-lg font-bold text-slate-900" data-bind="product.price">$39.99</span>
+                            <button class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition-colors" data-event="click:addToCart">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stylish ceramic vase for home decoration -->
+                <div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden hover:shadow-lg transition-shadow group" data-category="home">
+                    <div class="aspect-square overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400" 
+                             alt="Ceramic decorative vase" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-mock-image="true">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-slate-800 mb-2" data-bind="product.name">Ceramic Decorative Vase</h3>
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400 text-sm mr-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="text-sm text-slate-600" data-bind="product.reviewCount">(56)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-lg font-bold text-slate-900" data-bind="product.price">$69.99</span>
+                            <button class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition-colors" data-event="click:addToCart">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- @END_MAP )) -->
+            </div>
+
+            <!-- Pagination -->
+            <div class="flex justify-center mt-12">
+                <nav class="flex items-center space-x-2">
+                    <button class="px-3 py-2 text-slate-600 hover:text-brand-600 disabled:opacity-50" disabled>
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="px-3 py-2 bg-brand-600 text-white rounded-lg">1</button>
+                    <button class="px-3 py-2 text-slate-600 hover:text-brand-600 hover:bg-slate-100 rounded-lg">2</button>
+                    <button class="px-3 py-2 text-slate-600 hover:text-brand-600 hover:bg-slate-100 rounded-lg">3</button>
+                    <span class="px-3 py-2 text-slate-400">...</span>
+                    <button class="px-3 py-2 text-slate-600 hover:text-brand-600 hover:bg-slate-100 rounded-lg">10</button>
+                    <button class="px-3 py-2 text-slate-600 hover:text-brand-600">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- @END_COMPONENT: ProductGrid -->
+
+<!-- @COMPONENT: ShoppingCart [slide-out cart overlay] -->
+<div id="cart-overlay" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black bg-opacity-50" data-event="click:closeCart"></div>
+    <div class="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-xl">
+        <div class="flex flex-col h-full">
+            <!-- Cart Header -->
+            <div class="border-b border-slate-200 p-6">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-lg font-semibold">Shopping Cart</h2>
+                    <button class="text-slate-400 hover:text-slate-600" data-event="click:closeCart">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Cart Items -->
+            <div class="flex-1 overflow-y-auto p-6">
+                <!-- @MAP: cartItems.map(item => ( -->
+                <div class="flex items-center space-x-4 mb-6 p-4 border border-slate-200 rounded-lg">
+                    <!-- Product image placeholder for cart items -->
+                    <img src="https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=80&h=80" 
+                         alt="Cart item" 
+                         class="w-16 h-16 object-cover rounded-lg" data-mock-image="true">
+                    <div class="flex-1">
+                        <h3 class="font-medium text-slate-800" data-bind="item.name">Premium Smartphone Pro</h3>
+                        <p class="text-sm text-slate-600" data-bind="item.price">$899.99</p>
+                        <div class="flex items-center mt-2">
+                            <button class="text-slate-400 hover:text-slate-600" data-event="click:decreaseQuantity">
+                                <i class="fas fa-minus text-xs"></i>
+                            </button>
+                            <span class="mx-3 text-sm" data-bind="item.quantity">1</span>
+                            <button class="text-slate-400 hover:text-slate-600" data-event="click:increaseQuantity">
+                                <i class="fas fa-plus text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button class="text-red-500 hover:text-red-700" data-event="click:removeItem">
+                        <i class="fas fa-trash text-sm"></i>
+                    </button>
+                </div>
+                <!-- @END_MAP )) -->
+            </div>
+
+            <!-- Cart Footer -->
+            <div class="border-t border-slate-200 p-6">
+                <div class="flex justify-between mb-4">
+                    <span class="font-medium">Total:</span>
+                    <span class="font-bold text-lg" data-bind="cart.total">$1,289.97</span>
+                </div>
+                <button class="w-full bg-brand-600 text-white py-3 rounded-lg font-medium hover:bg-brand-700 transition-colors" data-event="click:checkout">
+                    Checkout
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- @END_COMPONENT: ShoppingCart -->
+
+<!-- @COMPONENT: ProductDetailModal [product quick view] -->
+<div id="product-modal" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black bg-opacity-50" data-event="click:closeModal"></div>
+    <div class="absolute inset-4 bg-white rounded-lg shadow-xl overflow-hidden md:inset-8">
+        <div class="flex flex-col md:flex-row h-full">
+            <!-- Product Image -->
+            <div class="md:w-1/2 bg-slate-100">
+                <!-- Featured product image for detail view -->
+                <img src="https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=600" 
+                     alt="Product detail view" 
+                     class="w-full h-full object-cover" data-mock-image="true">
+            </div>
+
+            <!-- Product Details -->
+            <div class="md:w-1/2 p-8 overflow-y-auto">
+                <div class="flex justify-between items-start mb-6">
+                    <h1 class="text-2xl font-bold text-slate-800" data-bind="product.name">Premium Smartphone Pro</h1>
+                    <button class="text-slate-400 hover:text-slate-600" data-event="click:closeModal">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+
+                <!-- Rating -->
+                <div class="flex items-center mb-4">
+                    <div class="flex text-yellow-400 mr-2">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <span class="text-slate-600" data-bind="product.rating">4.8 (124 reviews)</span>
+                </div>
+
+                <!-- Price -->
+                <div class="mb-6">
+                    <span class="text-3xl font-bold text-slate-900" data-bind="product.price">$899.99</span>
+                    <span class="text-lg text-slate-500 line-through ml-2" data-bind="product.originalPrice">$999.99</span>
+                </div>
+
+                <!-- Description -->
+                <div class="mb-6">
+                    <h3 class="font-semibold mb-2">Product Description</h3>
+                    <p class="text-slate-600" data-bind="product.description" data-mock="true">
+                        Experience the latest in smartphone technology with our Premium Smartphone Pro. 
+                        Features include a stunning display, advanced camera system, and all-day battery life.
+                    </p>
+                </div>
+
+                <!-- Options -->
+                <div class="mb-6">
+                    <h3 class="font-semibold mb-3">Color</h3>
+                    <div class="flex space-x-2">
+                        <button class="w-8 h-8 bg-gray-800 rounded-full border-2 border-brand-600"></button>
+                        <button class="w-8 h-8 bg-blue-600 rounded-full border-2 border-transparent hover:border-slate-300"></button>
+                        <button class="w-8 h-8 bg-red-600 rounded-full border-2 border-transparent hover:border-slate-300"></button>
+                    </div>
+                </div>
+
+                <!-- Quantity -->
+                <div class="mb-8">
+                    <h3 class="font-semibold mb-3">Quantity</h3>
+                    <div class="flex items-center">
+                        <button class="border border-slate-300 px-3 py-2 hover:bg-slate-100" data-event="click:decreaseQuantity">-</button>
+                        <input type="number" value="1" class="border-t border-b border-slate-300 px-4 py-2 w-16 text-center" data-mock="true">
+                        <button class="border border-slate-300 px-3 py-2 hover:bg-slate-100" data-event="click:increaseQuantity">+</button>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="space-y-3">
+                    <button class="w-full bg-brand-600 text-white py-3 rounded-lg font-medium hover:bg-brand-700 transition-colors" data-event="click:addToCart">
+                        Add to Cart
+                    </button>
+                    <button class="w-full border border-slate-300 text-slate-600 py-3 rounded-lg font-medium hover:bg-slate-50 transition-colors" data-event="click:addToWishlist">
+                        Add to Wishlist
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- @END_COMPONENT: ProductDetailModal -->
+
+<!-- @COMPONENT: CheckoutModal [checkout process] -->
+<div id="checkout-modal" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+    <div class="absolute inset-4 bg-white rounded-lg shadow-xl overflow-hidden md:inset-8">
+        <div class="flex flex-col h-full">
+            <!-- Checkout Header -->
+            <div class="border-b border-slate-200 p-6">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-xl font-semibold">Checkout</h2>
+                    <button class="text-slate-400 hover:text-slate-600" data-event="click:closeCheckout">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Checkout Content -->
+            <div class="flex-1 overflow-y-auto p-6">
+                <div class="max-w-2xl mx-auto">
+                    <!-- Progress Steps -->
+                    <div class="flex items-center mb-8">
+                        <div class="flex items-center text-brand-600">
+                            <div class="w-8 h-8 bg-brand-600 text-white rounded-full flex items-center justify-center text-sm font-medium">1</div>
+                            <span class="ml-2 font-medium">Shipping</span>
+                        </div>
+                        <div class="flex-1 h-px bg-slate-300 mx-4"></div>
+                        <div class="flex items-center text-slate-400">
+                            <div class="w-8 h-8 bg-slate-300 text-white rounded-full flex items-center justify-center text-sm font-medium">2</div>
+                            <span class="ml-2">Payment</span>
+                        </div>
+                        <div class="flex-1 h-px bg-slate-300 mx-4"></div>
+                        <div class="flex items-center text-slate-400">
+                            <div class="w-8 h-8 bg-slate-300 text-white rounded-full flex items-center justify-center text-sm font-medium">3</div>
+                            <span class="ml-2">Review</span>
+                        </div>
+                    </div>
+
+                    <!-- Shipping Form -->
+                    <div class="bg-slate-50 rounded-lg p-6 mb-6">
+                        <h3 class="text-lg font-semibold mb-4">Shipping Information</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">First Name</label>
+                                <input type="text" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-brand-500 focus:border-transparent" data-mock="true">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Last Name</label>
+                                <input type="text" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-brand-500 focus:border-transparent" data-mock="true">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Email</label>
+                                <input type="email" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-brand-500 focus:border-transparent" data-mock="true">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Address</label>
+                                <input type="text" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-brand-500 focus:border-transparent" data-mock="true">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">City</label>
+                                <input type="text" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-brand-500 focus:border-transparent" data-mock="true">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">ZIP Code</label>
+                                <input type="text" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-brand-500 focus:border-transparent" data-mock="true">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Form -->
+                    <div class="bg-slate-50 rounded-lg p-6 mb-6">
+                        <h3 class="text-lg font-semibold mb-4">Payment Information</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Card Number</label>
+                                <input type="text" placeholder="1234 5678 9012 3456" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-brand-500 focus:border-transparent" data-mock="true">
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 mb-2">Expiry Date</label>
+                                    <input type="text" placeholder="MM/YY" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-brand-500 focus:border-transparent" data-mock="true">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 mb-2">CVV</label>
+                                    <input type="text" placeholder="123" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-brand-500 focus:border-transparent" data-mock="true">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Order Summary -->
+                    <div class="bg-slate-50 rounded-lg p-6">
+                        <h3 class="text-lg font-semibold mb-4">Order Summary</h3>
+                        <div class="space-y-2 mb-4">
+                            <div class="flex justify-between">
+                                <span>Subtotal:</span>
+                                <span data-bind="order.subtotal">$1,289.97</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Shipping:</span>
+                                <span data-bind="order.shipping">$19.99</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Tax:</span>
+                                <span data-bind="order.tax">$103.20</span>
+                            </div>
+                            <div class="border-t border-slate-300 pt-2 mt-2">
+                                <div class="flex justify-between font-bold text-lg">
+                                    <span>Total:</span>
+                                    <span data-bind="order.total">$1,413.16</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Checkout Footer -->
+            <div class="border-t border-slate-200 p-6">
+                <div class="flex justify-between">
+                    <button class="px-6 py-2 border border-slate-300 text-slate-600 rounded-lg hover:bg-slate-50 transition-colors" data-event="click:goBack">
+                        Back to Cart
+                    </button>
+                    <button class="px-6 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition-colors" data-event="click:placeOrder">
+                        Place Order
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- @END_COMPONENT: CheckoutModal -->
+
+<!-- @COMPONENT: AdminDashboard [product management interface] -->
+<section id="admin-dashboard" class="hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Dashboard Header -->
+        <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6 mb-8">
+            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+                <div>
+                    <h1 class="text-2xl font-bold text-slate-800">Admin Dashboard</h1>
+                    <p class="text-slate-600">Manage your products and orders</p>
+                </div>
+                <button class="bg-brand-600 text-white px-6 py-2 rounded-lg hover:bg-brand-700 transition-colors" data-event="click:addProduct">
+                    <i class="fas fa-plus mr-2"></i>Add Product
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
+                <div class="flex items-center">
+                    <div class="p-3 bg-blue-100 rounded-full">
+                        <i class="fas fa-shopping-bag text-blue-600"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm text-slate-600">Total Products</p>
+                        <p class="text-2xl font-bold text-slate-800" data-bind="stats.totalProducts">248</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
+                <div class="flex items-center">
+                    <div class="p-3 bg-green-100 rounded-full">
+                        <i class="fas fa-dollar-sign text-green-600"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm text-slate-600">Total Revenue</p>
+                        <p class="text-2xl font-bold text-slate-800" data-bind="stats.totalRevenue">$45,230</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
+                <div class="flex items-center">
+                    <div class="p-3 bg-yellow-100 rounded-full">
+                        <i class="fas fa-shopping-cart text-yellow-600"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm text-slate-600">Total Orders</p>
+                        <p class="text-2xl font-bold text-slate-800" data-bind="stats.totalOrders">1,205</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
+                <div class="flex items-center">
+                    <div class="p-3 bg-purple-100 rounded-full">
+                        <i class="fas fa-users text-purple-600"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm text-slate-600">Total Customers</p>
+                        <p class="text-2xl font-bold text-slate-800" data-bind="stats.totalCustomers">3,840</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Management Table -->
+        <div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
+            <div class="p-6 border-b border-slate-200">
+                <h2 class="text-lg font-semibold">Product Management</h2>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-slate-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Product</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Category</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Price</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Stock</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Status</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-slate-200">
+                        <!-- @MAP: adminProducts.map(product => ( -->
+                        <tr data-bind="product.id">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <!-- Admin product thumbnail -->
+                                    <img src="https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=60&h=60" 
+                                         alt="Product thumbnail" 
+                                         class="w-10 h-10 rounded-lg object-cover" data-mock-image="true">
+                                    <div class="ml-4">
+                                        <div class="text-sm font-medium text-slate-900" data-bind="product.name">Premium Smartphone Pro</div>
+                                        <div class="text-sm text-slate-500" data-bind="product.sku">SKU: PSP-001</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-900" data-bind="product.category">Electronics</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-900" data-bind="product.price">$899.99</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-900" data-bind="product.stock">45</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800" data-bind="product.status">Active</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <button class="text-brand-600 hover:text-brand-700 mr-3" data-event="click:editProduct">Edit</button>
+                                <button class="text-red-600 hover:text-red-700" data-event="click:deleteProduct">Delete</button>
+                            </td>
+                        </tr>
+                        <!-- @END_MAP )) -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- @END_COMPONENT: AdminDashboard -->
+
+<!-- @COMPONENT: Footer [site footer with links] -->
+<footer class="bg-slate-800 text-white mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Company Info -->
+            <div>
+                <h3 class="text-lg font-semibold mb-4">ShopHub</h3>
+                <p class="text-slate-300 mb-4">Your one-stop destination for amazing products at great prices.</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-slate-300 hover:text-white transition-colors">
+                        <i class="fab fa-facebook text-xl"></i>
+                    </a>
+                    <a href="#" class="text-slate-300 hover:text-white transition-colors">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="text-slate-300 hover:text-white transition-colors">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-slate-300 hover:text-white transition-colors">About Us</a></li>
+                    <li><a href="#" class="text-slate-300 hover:text-white transition-colors">Contact</a></li>
+                    <li><a href="#" class="text-slate-300 hover:text-white transition-colors">FAQ</a></li>
+                    <li><a href="#" class="text-slate-300 hover:text-white transition-colors">Shipping Info</a></li>
+                </ul>
+            </div>
+
+            <!-- Categories -->
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Categories</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-slate-300 hover:text-white transition-colors">Electronics</a></li>
+                    <li><a href="#" class="text-slate-300 hover:text-white transition-colors">Fashion</a></li>
+                    <li><a href="#" class="text-slate-300 hover:text-white transition-colors">Home & Decor</a></li>
+                    <li><a href="#" class="text-slate-300 hover:text-white transition-colors">Accessories</a></li>
+                </ul>
+            </div>
+
+            <!-- Newsletter -->
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Newsletter</h3>
+                <p class="text-slate-300 mb-4">Subscribe to get updates on new products and offers.</p>
+                <div class="flex">
+                    <input type="email" placeholder="Your email" class="flex-1 px-4 py-2 rounded-l-lg text-slate-800" data-mock="true">
+                    <button class="bg-brand-600 px-4 py-2 rounded-r-lg hover:bg-brand-700 transition-colors">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="border-t border-slate-700 mt-12 pt-8 text-center">
+            <p class="text-slate-300">&copy; 2024 ShopHub. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+<!-- @END_COMPONENT: Footer -->
+
+<script>
+(function() {
+    'use strict';
+    
+    // TODO: Implement business logic, API calls, and state management
+    
+    // Cart functionality
+    let cartItems = [];
+    let isCartOpen = false;
+    
+    // Modal state
+    let isProductModalOpen = false;
+    let isCheckoutModalOpen = false;
+    
+    // Basic UI interactions
+    function toggleCart() {
+        isCartOpen = !isCartOpen;
+        const cartOverlay = document.getElementById('cart-overlay');
+        if (cartOverlay) {
+            cartOverlay.classList.toggle('hidden', !isCartOpen);
+        }
+    }
+    
+    function closeCart() {
+        isCartOpen = false;
+        const cartOverlay = document.getElementById('cart-overlay');
+        if (cartOverlay) {
+            cartOverlay.classList.add('hidden');
+        }
+    }
+    
+    function openProductModal() {
+        isProductModalOpen = true;
+        const modal = document.getElementById('product-modal');
+        if (modal) {
+            modal.classList.remove('hidden');
+        }
+    }
+    
+    function closeProductModal() {
+        isProductModalOpen = false;
+        const modal = document.getElementById('product-modal');
+        if (modal) {
+            modal.classList.add('hidden');
+        }
+    }
+    
+    function openCheckout() {
+        closeCart();
+        isCheckoutModalOpen = true;
+        const modal = document.getElementById('checkout-modal');
+        if (modal) {
+            modal.classList.remove('hidden');
+        }
+    }
+    
+    function closeCheckout() {
+        isCheckoutModalOpen = false;
+        const modal = document.getElementById('checkout-modal');
+        if (modal) {
+            modal.classList.add('hidden');
+        }
+    }
+    
+    // Add event listeners for basic interactions
+    document.addEventListener('DOMContentLoaded', function() {
+        // Cart toggle
+        const cartButtons = document.querySelectorAll('[data-event*="toggleCart"]');
+        cartButtons.forEach(button => {
+            button.addEventListener('click', toggleCart);
+        });
+        
+        // Close cart
+        const closeCartButtons = document.querySelectorAll('[data-event*="closeCart"]');
+        closeCartButtons.forEach(button => {
+            button.addEventListener('click', closeCart);
+        });
+        
+        // Product modal
+        const productCards = document.querySelectorAll('.group');
+        productCards.forEach(card => {
+            card.addEventListener('click', function(e) {
+                if (!e.target.closest('button')) {
+                    openProductModal();
+                }
+            });
+        });
+        
+        // Close product modal
+        const closeModalButtons = document.querySelectorAll('[data-event*="closeModal"]');
+        closeModalButtons.forEach(button => {
+            button.addEventListener('click', closeProductModal);
+        });
+        
+        // Checkout
+        const checkoutButtons = document.querySelectorAll('[data-event*="checkout"]');
+        checkoutButtons.forEach(button => {
+            button.addEventListener('click', openCheckout);
+        });
+        
+        // Close checkout
+        const closeCheckoutButtons = document.querySelectorAll('[data-event*="closeCheckout"]');
+        closeCheckoutButtons.forEach(button => {
+            button.addEventListener('click', closeCheckout);
+        });
+        
+        // Add to cart buttons
+        const addToCartButtons = document.querySelectorAll('[data-event*="addToCart"]');
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                // TODO: Implement add to cart functionality
+                console.log('Add to cart clicked');
+            });
+        });
+        
+        // Category filters
+        const filterButtons = document.querySelectorAll('[data-filter]');
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // TODO: Implement category filtering
+                console.log('Filter:', this.dataset.filter);
+                
+                // Update active state
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('bg-brand-600', 'text-white');
+                    btn.classList.add('bg-slate-100', 'text-slate-600');
+                });
+                this.classList.remove('bg-slate-100', 'text-slate-600');
+                this.classList.add('bg-brand-600', 'text-white');
+            });
+        });
+    });
+    
+    // Basic responsive menu functionality
+    function toggleMobileMenu() {
+        // TODO: Implement mobile menu toggle
+        console.log('Mobile menu toggle');
+    }
+    
+    // Basic form validation placeholder
+    function validateForm(form) {
+        // TODO: Implement form validation
+        return true;
+    }
+    
+    // Expose functions for event handlers
+    window.ShopHub = {
+        toggleCart,
+        closeCart,
+        openProductModal,
+        closeProductModal,
+        openCheckout,
+        closeCheckout,
+        toggleMobileMenu,
+        validateForm
+    };
+})();
+</script>
+
+</body>
+</html>
